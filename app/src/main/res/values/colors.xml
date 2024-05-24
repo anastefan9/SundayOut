@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="textField_border_unfocused">#9D9D9D</color>
+    <color name="main_blue">#1C92FF</color>
+    <color name="gradient_blue">#5BBAFF</color>
+    <color name="gradient_pink">#E6459D</color>
+    <color name="gradient_purple">#9464E2</color>
+    <color name="gradient_red">#FD4D4D</color>
+    <color name="gradient_orange">#FDB64D</color>
+    <color name="gradient_yellow">#FDE14D</color>
+    <color name="container_backgroud">#FCFCFC</color>
+    <color name="container_border">#E7E7E7</color>
+    <color name="primary_gray">#525252</color>
 </resources>

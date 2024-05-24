@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">SundayOut</string>
+    <string name="textField_email">Email</string>
+    <string name="textField_password">Password</string>
+    <string name="textField_first_name">First Name</string>
+    <string name="textField_second_name">Second Name</string>
+    <string name="createNewAccount">Create new account</string>
+    <string name="logIn">Log In</string>
+    <string name="continueButton">Continue</string>
+    <string name="passwordBannerTitleUnverified">Password requirements for a valid input:</string>
+    <string name="passwordBannerTitleInvalid">Password doesn\'t meet all requirements:</string>
+    <string name="passwordBannerTitleValid">Password meets all requirements!</string>
+    <string name="passwordBannerSpecialChar">1 special character</string>
+    <string name="passwordBannerDigit">1 digit</string>
+    <string name="passwordBannerUppercaseChar">1 upper-case letter</string>
+    <string name="passwordBannerLowercaseChar">1 lower-case letter</string>
+    <string name="passwordBannerMinLength">minimum 8 character password</string>
 </resources>
