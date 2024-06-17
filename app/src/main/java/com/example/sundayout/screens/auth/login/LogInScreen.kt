@@ -1,4 +1,4 @@
-package com.example.sundayout.screens
+package com.example.sundayout.screens.auth.login
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -28,7 +28,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp

@@ -1,4 +1,4 @@
-package com.example.sundayout.screens
+package com.example.sundayout.screens.auth.register
 
 data class PasswordValidationState(
     val isPasswordValid: Boolean = false,

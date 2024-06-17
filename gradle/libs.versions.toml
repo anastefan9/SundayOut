@@ -1,15 +1,16 @@
 [versions]
-agp = "8.3.1"
+agp = "8.3.2"
 kotlin = "1.9.0"
-coreKtx = "1.13.0"
+coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
-lifecycleRuntimeKtx = "2.7.0"
+lifecycleRuntimeKtx = "2.8.1"
 activityCompose = "1.9.0"
-composeBom = "2023.08.00"
-navigationVersion = "2.7.4"
-
+composeBom = "2024.05.00"
+navigationVersion = "2.7.7"
+kotlinSerialization = "1.8.10"
+runtimeLivedata = "1.6.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,10 +28,19 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationVersion" }
-androidx-lifecycle-viewmodel= { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.6.1" }
+androidx-lifecycle-viewmodel= { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "viewModel" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material", version = "material" }
 
+squareup-retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version = "2.9.0"}
+squareup-retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version = "2.9.0" }
+coil = { group = "io.coil-kt", name = "coil-compose", version = "2.5.0" }
+squareup-okhttp3 = { group = "com.squareup.okhttp3", name = "logging-interceptor", version = "4.9.1" }
+jetbrain-kotlinx = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.5.1" }
+kotlinx-serialization-convertor = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrainsKotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 

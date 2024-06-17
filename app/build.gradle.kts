@@ -1,6 +1,8 @@
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.jetbrainsKotlinSerialization)
 }
 
 android {
@@ -61,6 +63,14 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.okhttp3)
+    implementation(libs.squareup.retrofit.converter)
+    implementation(libs.coil)
+    implementation(libs.jetbrain.kotlinx)
+    implementation(libs.kotlinx.serialization.convertor)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

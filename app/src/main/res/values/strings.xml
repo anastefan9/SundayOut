@@ -15,4 +15,10 @@
     <string name="passwordBannerUppercaseChar">1 upper-case letter</string>
     <string name="passwordBannerLowercaseChar">1 lower-case letter</string>
     <string name="passwordBannerMinLength">minimum 8 character password</string>
+    <string name="navbarSeach">Search</string>
+    <string name="navBarProfile">Profile</string>
+    <string name="loading_failed">News loading has failed</string>
+    <string name="map">Map</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
 </resources>

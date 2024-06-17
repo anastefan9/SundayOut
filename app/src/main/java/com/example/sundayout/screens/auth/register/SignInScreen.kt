@@ -1,4 +1,4 @@
-package com.example.sundayout.screens
+package com.example.sundayout.screens.auth.register
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,8 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -32,6 +29,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,13 +51,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.sundayout.R
+import com.example.sundayout.screens.auth.NavigationSundayOut
 import com.example.sundayout.ui.theme.interFontFamily
 import com.example.sundayout.utils.rememberImeState
 
 @Composable
 fun SignInScreen(
-    signInViewModel: SignInViewModel = viewModel(),
+    navController: NavHostController,
+    signInViewModel: SignInViewModel = viewModel(factory = SignInViewModel.Factory),
     modifier: Modifier = Modifier
         .fillMaxSize()
 ) {
@@ -68,6 +69,18 @@ fun SignInScreen(
     val imeState = rememberImeState()
     val scrollState = rememberScrollState()
     val focusedTextField = rememberFocusedTextFieldState()
+
+    val navigateToMainScreen by signInViewModel.navigateToMainScreen.observeAsState(false)
+
+    // Trigger navigation if navigateToMainScreen is true
+    if (navigateToMainScreen) {
+        LaunchedEffect(Unit) {
+            navController.navigate(NavigationSundayOut.Home.name) {
+                popUpTo(NavigationSundayOut.SignIn.name) { inclusive = true }
+            }
+            signInViewModel.resetNavigationState() // Reset navigation state
+        }
+    }
 
     LaunchedEffect(key1 = imeState.value, key2 = focusedTextField.value) {
         val targetScroll = focusedTextField.value * 320
@@ -124,7 +137,7 @@ fun SignInScreen(
                 signInViewModel.updateEmail(it)
             },
             label = stringResource(R.string.textField_email),
-            keyBoardType = KeyboardType.Password,
+            keyBoardType = KeyboardType.Email,
             focusedTextField = focusedTextField,
             keyboardAction = KeyboardActions(
                 onDone = { focusManager.clearFocus() }
@@ -145,7 +158,7 @@ fun SignInScreen(
             },
             hasVisualTransformation = true,
             label = stringResource(R.string.textField_password),
-            keyBoardType = KeyboardType.Email,
+            keyBoardType = KeyboardType.Password,
             focusedTextField = focusedTextField,
             keyboardAction = KeyboardActions(
                 onDone = { focusManager.clearFocus() }
@@ -160,8 +173,11 @@ fun SignInScreen(
 
         Button(
             onClick = {
-                signInViewModel.isPasswordValid()
-                signInViewModel.setPasswordVerified()
+                signInViewModel.setPasswordState()
+                if (signInViewModel.isPasswordValid()) {
+                    signInViewModel.signup()
+                    //toMainScreen()
+                }
             },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main_blue)),

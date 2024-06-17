@@ -1,4 +1,4 @@
-package com.example.sundayout.screens
+package com.example.sundayout.screens.auth.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

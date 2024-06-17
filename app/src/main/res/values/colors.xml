@@ -18,4 +18,6 @@
     <color name="container_backgroud">#FCFCFC</color>
     <color name="container_border">#E7E7E7</color>
     <color name="primary_gray">#525252</color>
+    <color name="divider_color">#E6E6E6</color>
+    <color name="banner_text_color">#191919</color>
 </resources>
