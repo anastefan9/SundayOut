@@ -1,5 +1,6 @@
 package com.example.sundayout.screens.auth.register
 
+import android.widget.Toast
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -40,6 +42,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -50,17 +53,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.sundayout.R
-import com.example.sundayout.screens.auth.NavigationSundayOut
 import com.example.sundayout.ui.theme.interFontFamily
 import com.example.sundayout.utils.rememberImeState
 
 @Composable
 fun SignInScreen(
-    navController: NavHostController,
-    signInViewModel: SignInViewModel = viewModel(factory = SignInViewModel.Factory),
+    signInViewModel: SignInViewModel,
+    navToMainScreen: () -> Unit,
     modifier: Modifier = Modifier
         .fillMaxSize()
 ) {
@@ -69,16 +71,19 @@ fun SignInScreen(
     val imeState = rememberImeState()
     val scrollState = rememberScrollState()
     val focusedTextField = rememberFocusedTextFieldState()
-
-    val navigateToMainScreen by signInViewModel.navigateToMainScreen.observeAsState(false)
-
-    // Trigger navigation if navigateToMainScreen is true
-    if (navigateToMainScreen) {
-        LaunchedEffect(Unit) {
-            navController.navigate(NavigationSundayOut.Home.name) {
-                popUpTo(NavigationSundayOut.SignIn.name) { inclusive = true }
+    val signUpEvent by signInViewModel.signUpEvent.observeAsState()
+    var showErrorDialog by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+    
+    LaunchedEffect(signUpEvent) {
+        when(signUpEvent) {
+            is SignUpEvent.NavigateHome -> {
+                navToMainScreen()
             }
-            signInViewModel.resetNavigationState() // Reset navigation state
+            else -> {
+                errorMessage = "An unexpected error occurred."
+                showErrorDialog = true
+            }
         }
     }
 
@@ -95,7 +100,7 @@ fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(R.drawable.sundayout),
+            painter = painterResource(R.drawable.dacquoise_name),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -176,11 +181,10 @@ fun SignInScreen(
                 signInViewModel.setPasswordState()
                 if (signInViewModel.isPasswordValid()) {
                     signInViewModel.signup()
-                    //toMainScreen()
                 }
             },
             shape = RoundedCornerShape(10.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(R.color.main_blue)),
+            colors = ButtonDefaults.buttonColors(colorResource(R.color.main_pink)),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
@@ -236,9 +240,9 @@ fun CustomTextField(
             },
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedBorderColor = colorResource(R.color.textField_border_unfocused),
-            focusedBorderColor = colorResource(R.color.main_blue),
+            focusedBorderColor = colorResource(R.color.main_pink),
             unfocusedLabelColor = colorResource(R.color.textField_border_unfocused),
-            focusedLabelColor = colorResource(R.color.main_blue)
+            focusedLabelColor = colorResource(R.color.main_pink)
         ),
         onValueChange = {
             updateTextField(it)
@@ -289,7 +293,7 @@ fun getPasswordTextColor(isValid: Boolean, isVerified: Boolean): Color {
     if (isVerified && !isValid)
         return Color.Red
     else if (isValid)
-        return colorResource(R.color.main_blue)
+        return colorResource(R.color.main_pink)
     else
         return colorResource(R.color.primary_gray)
 }
@@ -308,7 +312,7 @@ fun ValidatePasswordBannerView(
                 color = colorResource(R.color.container_border),
                 shape = RoundedCornerShape(10.dp)
             )
-            .background(color = colorResource(R.color.container_backgroud))
+            .background(color = colorResource(R.color.white))
             .padding(bottom = 12.dp)
     ) {
         Text(
@@ -360,4 +364,18 @@ fun ValidatePasswordBannerView(
             title = stringResource(R.string.passwordBannerSpecialChar)
         )
     }
+}
+
+@Composable
+fun ErrorDialog(message: String, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Error") },
+        text = { Text(text = message) },
+        confirmButton = {
+            Button(onClick = onDismiss) {
+                Text("OK")
+            }
+        }
+    )
 }

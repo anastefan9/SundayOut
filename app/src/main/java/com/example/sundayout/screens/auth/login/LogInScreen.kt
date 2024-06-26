@@ -52,7 +52,7 @@ fun LogInScreen(
             .padding(horizontal = 30.dp)
     ) {
         Image(
-            painter = painterResource(R.drawable.sundayout),
+            painter = painterResource(R.drawable.dacquoise_name),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
@@ -68,9 +68,10 @@ fun LogInScreen(
                 .height(60.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = colorResource(R.color.textField_border_unfocused),
-                focusedBorderColor = colorResource(R.color.main_blue),
+                focusedBorderColor = colorResource(R.color.main_pink),
                 unfocusedLabelColor = colorResource(R.color.textField_border_unfocused),
-                focusedLabelColor = colorResource(R.color.main_blue)
+                focusedLabelColor = colorResource(R.color.main_pink),
+                unfocusedContainerColor = colorResource(R.color.white)
             ),
             onValueChange = {
                 logInViewModel.updateEmailField(it)
@@ -96,9 +97,9 @@ fun LogInScreen(
                 .height(60.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedBorderColor = colorResource(R.color.textField_border_unfocused),
-                focusedBorderColor = colorResource(R.color.main_blue),
+                focusedBorderColor = colorResource(R.color.main_pink),
                 unfocusedLabelColor = colorResource(R.color.textField_border_unfocused),
-                focusedLabelColor = colorResource(R.color.main_blue)
+                focusedLabelColor = colorResource(R.color.main_pink)
             ),
             onValueChange = {
                 logInViewModel.updatePasswordField(it)
@@ -115,7 +116,7 @@ fun LogInScreen(
         Button(
             onClick = { /*TODO*/ },
             shape = RoundedCornerShape(10.dp),
-            colors = ButtonDefaults.buttonColors(colorResource(R.color.main_blue)),
+            colors = ButtonDefaults.buttonColors(colorResource(R.color.main_pink)),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 20.dp)
@@ -129,17 +130,18 @@ fun LogInScreen(
             )
         }
 
-        Spacer(modifier = Modifier.weight(1.0f))
+        Spacer(modifier = Modifier.weight(1f))
 
         OutlinedButton(
             onClick = { toSignIn() },
             shape = RoundedCornerShape(10.dp),
             border = BorderStroke(
                 width = 1.dp,
-                brush = Brush.nativeGradient()
+                color = colorResource(R.color.medium_gray)
             ),
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(bottom = 24.dp)
                 .height(48.dp)
         ) {
             Text(

@@ -1,35 +1,34 @@
 package com.example.sundayout.screens.auth.register
 
-import android.text.Spannable.Factory
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.sundayout.SundayoutApplication
-import com.example.sundayout.data.DataSignUpRepository
-import com.example.sundayout.data.SignupRepository
+import com.example.sundayout.data.SignUpRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import com.example.sundayout.navigation.AppNavController
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignInViewModel(
-    private val signUpRepository: SignupRepository
+sealed class SignUpEvent {
+    object NavigateHome: SignUpEvent()
+}
+
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val signUpRepository: SignUpRepository,
 ): ViewModel() {
     private val _uiState = MutableStateFlow(PasswordValidationState())
     val uiState: StateFlow<PasswordValidationState> = _uiState.asStateFlow()
 
-    private val _navigateToMainScreen = MutableLiveData<Boolean>()
-    val navigateToMainScreen: LiveData<Boolean> = _navigateToMainScreen
+    private val _signUpEvent = MutableLiveData<SignUpEvent>()
+    val signUpEvent: LiveData<SignUpEvent> = _signUpEvent
 
     var userFirstName by mutableStateOf("")
         private set
@@ -122,27 +121,12 @@ class SignInViewModel(
                     password = userPassword)
                 if (result.isSuccessful) {
                     println("success signup")
-                    _navigateToMainScreen.value = true
+                    _signUpEvent.value = SignUpEvent.NavigateHome
                 } else {
                     println("fail to signup")
                 }
             } catch (e: Exception) {
                 println("Signup failed: ${e.message}")
-            }
-        }
-    }
-
-    fun resetNavigationState() {
-        _navigateToMainScreen.value = false
-    }
-
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val application = (this[APPLICATION_KEY] as SundayoutApplication)
-                val signupRepository = application.container.signupRepository
-                SignInViewModel(signUpRepository = signupRepository)
             }
         }
     }

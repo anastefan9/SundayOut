@@ -21,4 +21,9 @@
     <string name="map">Map</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="login_screen">Login</string>
+    <string name="signup_screen">Signup</string>
+    <string name="home_screen">Home</string>
+    <string name="authNavGraph">AuthNavGraph</string>
+    <string name="mainNavGraph">MainNavGraph</string>
 </resources>

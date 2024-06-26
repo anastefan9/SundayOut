@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Business(
     val businessId: Int,
-    @SerialName(value = "ownerId_id")
-    val ownerId: Int,
+    @SerialName(value = "adminId_id")
+    val adminId: Int,
     val name: String,
     val latitude: String,
     val longitude: String,

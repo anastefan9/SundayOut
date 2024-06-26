@@ -8,10 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.sundayout.navigation.AppNav
-import com.example.sundayout.screens.auth.AuthApp
+import androidx.navigation.compose.rememberNavController
 import com.example.sundayout.ui.theme.SundayOutTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +23,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White
                 ) {
-                    AuthApp()
+                    val navController = rememberNavController()
+                    RootNavGraph(navHostController = navController)
                 }
             }
         }

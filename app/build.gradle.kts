@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsKotlinSerialization)
+    kotlin("kapt")
+    alias(libs.plugins.google.dagger.hilt)
 }
 
 android {
@@ -78,4 +80,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //hilt
+    implementation(libs.google.dagger.hilt)
+    kapt(libs.google.dagger.hilt.compiler)
+//    implementation(libs.androidx.hilt.viewmodel)
+    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation)
+}
+
+kapt {
+    correctErrorTypes = true
 }

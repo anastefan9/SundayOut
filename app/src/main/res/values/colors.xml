@@ -20,4 +20,6 @@
     <color name="primary_gray">#525252</color>
     <color name="divider_color">#E6E6E6</color>
     <color name="banner_text_color">#191919</color>
+    <color name="main_pink">#F81055</color>
+    <color name="medium_gray">#4C4C4C</color>
 </resources>

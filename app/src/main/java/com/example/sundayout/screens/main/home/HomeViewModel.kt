@@ -17,9 +17,11 @@ import com.example.sundayout.data.BusinessRepository
 import com.example.sundayout.data.NetworkBusinessRepository
 import com.example.sundayout.model.Business
 import com.example.sundayout.screens.auth.register.SignInViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 
 sealed interface BusinessesUiState {
@@ -28,7 +30,10 @@ sealed interface BusinessesUiState {
     object Loading: BusinessesUiState
 }
 
-class HomeViewModel(private val businessesRepository: BusinessRepository): ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val businessesRepository: BusinessRepository
+): ViewModel() {
     var businessesUiState: BusinessesUiState by mutableStateOf(BusinessesUiState.Loading)
         private set
     var searchText by mutableStateOf("")
@@ -47,7 +52,7 @@ class HomeViewModel(private val businessesRepository: BusinessRepository): ViewM
             businessesUiState = BusinessesUiState.Loading
             businessesUiState = try {
                 BusinessesUiState.Success (
-                    businessesRepository.getBusinesses()
+                    businessesRepository.getBusinesses() //
                 )
             } catch (e: IOException) {
                 BusinessesUiState.Error
@@ -57,13 +62,13 @@ class HomeViewModel(private val businessesRepository: BusinessRepository): ViewM
         }
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val application = (this[APPLICATION_KEY] as SundayoutApplication)
-                val businessesRepository = application.container.businessRepository
-                HomeViewModel(businessesRepository = businessesRepository)
-            }
-        }
-    }
+//    companion object {
+//        val Factory: ViewModelProvider.Factory = viewModelFactory {
+//            initializer {
+//                val application = (this[APPLICATION_KEY] as SundayoutApplication)
+//                val businessesRepository = application.container.businessRepository
+//                HomeViewModel(businessesRepository = businessesRepository)
+//            }
+//        }
+//    }
 }

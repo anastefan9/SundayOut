@@ -14,18 +14,20 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.colorResource
 import androidx.core.view.WindowCompat
+import com.example.sundayout.R
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = androidx.compose.ui.graphics.Color.White,
+    secondary = androidx.compose.ui.graphics.Color.White,
+    tertiary = androidx.compose.ui.graphics.Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = androidx.compose.ui.graphics.Color.White,
+    secondary = androidx.compose.ui.graphics.Color.White,
+    tertiary = androidx.compose.ui.graphics.Color.White
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -38,13 +40,17 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+
 @Composable
 fun SundayOutTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+    val CustomLightColorScheme = lightColorScheme(
+        background = colorResource(R.color.white)
+    )
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
@@ -52,7 +58,7 @@ fun SundayOutTheme(
         }
 
         darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        else -> CustomLightColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
